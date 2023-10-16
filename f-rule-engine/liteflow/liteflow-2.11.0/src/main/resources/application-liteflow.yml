@@ -1,0 +1,33 @@
+liteflow:
+  rule-source-ext-data-map:
+    # 数据库地址
+    url: jdbc:mysql://localhost:3306/demo
+    # 数据库连接驱动名称
+    driverClassName: com.mysql.cj.jdbc.Driver
+    # 数据库用户名
+    username: root
+    # 数据库密码
+    password: root
+    applicationName: demo
+    #以下是chain表的配置，这个一定得有
+    # chain表明
+    chainTableName: chain
+    # 执行链应用程序名称
+    chainApplicationNameField: application_name
+    # 执行链名称
+    chainNameField: chain_name
+    # 执行链的el表达式
+    elDataField: el_data
+    #以下是script表的配置，如果你没使用到脚本，下面可以不配置
+    # 脚本表名
+    scriptTableName: script
+    # 脚本应用程序名称
+    scriptApplicationNameField: application_name
+    # 脚本id ->根据脚本id执行
+    scriptIdField: script_id
+    # 脚本名称 完整叙述执行链中会带有脚本名称
+    scriptNameField: script_name
+    # 脚本数据
+    scriptDataField: script_data
+    # 脚本类型
+    scriptTypeField: script_type

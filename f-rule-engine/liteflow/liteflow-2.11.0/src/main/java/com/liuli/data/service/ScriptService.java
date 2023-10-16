@@ -1,0 +1,17 @@
+package com.liuli.data.service;
+
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.liuli.data.entity.Script;
+
+/**
+ * <p>
+ *  服务类
+ * </p>
+ *
+ * @author hui-zhang
+ * @since 2023-06-14
+ */
+public interface ScriptService extends IService<Script> {
+
+}

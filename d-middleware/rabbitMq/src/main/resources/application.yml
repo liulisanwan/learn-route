@@ -1,0 +1,36 @@
+server:
+  port: 80
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: rabbitmq-demo
+  profiles:
+    include: rabbitmq
+
+# 配置日志地址
+logging:
+  config: classpath:logback-spring.xml
+
+
+
+
+# Knife4j接口文档
+knife4j:
+  enable: true
+  basic:
+    enable: false
+    username: admin
+    password: 123456
+  openapi:
+    title: 在线文档
+    description: "API文档"
+    version: v1.0.0
+    license: MIT
+    group:
+      demo:
+        group-name: demo
+        api-rule: package
+        api-rule-resources:
+          - com.demo

@@ -1,0 +1,9 @@
+spring:
+  #给项目来个名字
+  application:
+    name: threadLocal_demo
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  port: 8083

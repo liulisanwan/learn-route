@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow>
+
+    <nodes>
+        <node id="x" type="for_script" language="groovy">
+            <![CDATA[
+                return 3
+            ]]>
+        </node>
+
+        <node id="y" type="break_script" language="groovy">
+            <![CDATA[
+                def count = defaultContext.getData("test")
+                return count > 3
+            ]]>
+        </node>
+
+        <node id="z" type="while_script" language="groovy">
+            <![CDATA[
+                def key = "test"
+                if (defaultContext.hasData(key)){
+                    def count = defaultContext.getData("test")
+                    return count < 5
+                }else{
+                    return true
+                }
+            ]]>
+        </node>
+
+        <node id="w" type="script" language="groovy">
+            <![CDATA[
+                def key = "test"
+                if (defaultContext.hasData(key)){
+                    defaultContext.setData(key, defaultContext.getData(key) + "-" + _meta.loopObject);
+                }else{
+                    defaultContext.setData(key, _meta.loopObject);
+                }
+            ]]>
+        </node>
+    </nodes>
+
+    <chain name="loop1">
+        FOR(2).DO(THEN(a,b,c));
+    </chain>
+
+    <chain name="loop2">
+        FOR(x).DO(THEN(a,b,c));
+    </chain>
+
+    <chain name="loop3">
+        FOR(10).DO(THEN(a,b,d)).BREAK(y);
+    </chain>
+
+    <chain name="loop4">
+        WHILE(z).DO(THEN(a,d));
+    </chain>
+
+    <chain name="loop5">
+        WHILE(z).DO(THEN(a,d)).BREAK(y);
+    </chain>
+
+    <chain name="loop6">
+        ITERATOR(e).DO(w);
+    </chain>
+</flow>
