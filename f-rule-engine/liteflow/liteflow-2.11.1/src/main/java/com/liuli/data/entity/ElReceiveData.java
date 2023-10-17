@@ -20,18 +20,44 @@ import java.util.List;
 @AllArgsConstructor
 public class ElReceiveData {
 
+    /**
+     * 类型
+     */
     private ElType type;
 
+    /**
+     * 节点id
+     */
     private String NodeId;
 
+    /**
+     * 节点id列表
+     */
+    private List<String> nodeIdList;
+
+    /**
+     * id
+     */
     private String id;
 
+    /**
+     * 标签
+     */
     private String tag;
 
+    /**
+     * 真节点id
+     */
     private String trueNodeId;
 
+    /**
+     * 假节点id
+     */
     private String falseNodeId;
 
+    /**
+     * 孩子列表
+     */
     private List<ElReceiveData> childrenList;
 
 

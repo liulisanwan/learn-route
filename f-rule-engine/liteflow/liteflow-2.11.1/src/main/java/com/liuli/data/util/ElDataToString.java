@@ -35,6 +35,154 @@ public class ElDataToString {
         ELWrapper elWrapper;
         String id = receiveData.getId();
         String tag = receiveData.getTag();
+        String typeName = receiveData.getType().getName();
+        List<String> nodeIdList = receiveData.getNodeIdList();
+        switch (typeName) {
+            case "ForELWrapper":
+                elWrapper = ELBus.forOpt(receiveData.getNodeId());
+                break;
+            case "IteratorELWrapper":
+                elWrapper = ELBus.iteratorOpt(receiveData.getNodeId());
+                break;
+            case "NodeELWrapper":
+                elWrapper = ELBus.node(receiveData.getNodeId());
+                break;
+            case "SwitchELWrapper":
+                elWrapper = ELBus.switchOpt(receiveData.getNodeId());
+                break;
+            case "WhileELWrapper":
+                elWrapper = ELBus.whileOpt(receiveData.getNodeId());
+                break;
+            case "CatchELWrapper":
+                elWrapper = ELBus.catchException(receiveData.getNodeId());
+                break;
+            case "IfELWrapper":
+                elWrapper = ELBus.ifOpt(receiveData.getNodeId(), receiveData.getTrueNodeId(), receiveData.getFalseNodeId());
+                break;
+            case "NotELWrapper":
+                elWrapper = ELBus.not(receiveData.getNodeId());
+                break;
+            case "OrELWrapper":
+                elWrapper = createOrWrapper(nodeIdList, receiveData.getNodeId());
+                addChildOrWrappers(elWrapper, childrenWrapper);
+                break;
+            case "AndELWrapper":
+                elWrapper = createAndWrapper(nodeIdList, receiveData.getNodeId());
+                addChildAndWrappers(elWrapper, childrenWrapper);
+                break;
+            case "WhenELWrapper":
+                elWrapper = createWhenWrapper(nodeIdList, receiveData.getNodeId());
+                addChildWhenWrappers(elWrapper, childrenWrapper);
+                break;
+            default:
+            case "ThenELWrapper":
+                elWrapper = createThenWrapper(nodeIdList, receiveData.getNodeId());
+                addChildThenWrappers(elWrapper, childrenWrapper);
+                break;
+
+        }
+        if (StrUtil.isNotBlank(id) && !typeName.equals("NodeELWrapper")) {
+            elWrapper.id(id);
+        }
+        if (StrUtil.isNotBlank(tag)) {
+            elWrapper.tag(tag);
+        }
+        return elWrapper;
+    }
+
+    private static void addChildThenWrappers(ELWrapper elWrapper, List<ELWrapper> childrenWrapper) {
+        if (CollectionUtil.isNotEmpty(childrenWrapper)) {
+            childrenWrapper.forEach(wrapper -> {
+                ((ThenELWrapper) elWrapper).then(wrapper);
+            });
+        }
+    }
+
+    private static void addChildWhenWrappers(ELWrapper elWrapper, List<ELWrapper> childrenWrapper) {
+        if (CollectionUtil.isNotEmpty(childrenWrapper)) {
+            childrenWrapper.forEach(wrapper -> {
+                ((WhenELWrapper) elWrapper).when(wrapper);
+            });
+        }
+    }
+
+    private static void addChildAndWrappers(ELWrapper elWrapper, List<ELWrapper> childrenWrapper) {
+        if (CollectionUtil.isNotEmpty(childrenWrapper)) {
+            childrenWrapper.forEach(wrapper -> {
+                ((AndELWrapper) elWrapper).and(wrapper);
+            });
+        }
+    }
+
+    private static void addChildOrWrappers(ELWrapper elWrapper, List<ELWrapper> childrenWrapper) {
+        if (CollectionUtil.isNotEmpty(childrenWrapper)) {
+            childrenWrapper.forEach(wrapper -> {
+                ((OrELWrapper) elWrapper).or(wrapper);
+            });
+        }
+    }
+
+
+    private static ELWrapper createOrWrapper(List<String> nodeIdList, String receiveNodeId) {
+        OrELWrapper orWrapper;
+        if (CollectionUtil.isNotEmpty(nodeIdList)) {
+            orWrapper = ELBus.or(nodeIdList.get(0));
+            for (int i = 1; i < nodeIdList.size(); i++) {
+                orWrapper.or(nodeIdList.get(i));
+            }
+        } else {
+            orWrapper = ELBus.or(receiveNodeId);
+        }
+        return orWrapper;
+    }
+
+    private static ELWrapper createAndWrapper(List<String> nodeIdList, String receiveNodeId) {
+        AndELWrapper andWrapper;
+        if (CollectionUtil.isNotEmpty(nodeIdList)) {
+            andWrapper = ELBus.and(nodeIdList.get(0));
+            for (int i = 1; i < nodeIdList.size(); i++) {
+                andWrapper.and(nodeIdList.get(i));
+            }
+        } else {
+            andWrapper = ELBus.and(receiveNodeId);
+        }
+        return andWrapper;
+    }
+
+    private static ELWrapper createWhenWrapper(List<String> nodeIdList, String receiveNodeId) {
+        WhenELWrapper whenWrapper;
+        if (CollectionUtil.isNotEmpty(nodeIdList)) {
+            whenWrapper = ELBus.when(nodeIdList.get(0));
+            for (int i = 1; i < nodeIdList.size(); i++) {
+                whenWrapper.when(nodeIdList.get(i));
+            }
+        } else {
+            whenWrapper = ELBus.when(receiveNodeId);
+        }
+        return whenWrapper;
+    }
+
+    private static ELWrapper createThenWrapper(List<String> nodeIdList, String receiveNodeId) {
+        ThenELWrapper thenWrapper;
+        if (CollectionUtil.isNotEmpty(nodeIdList)) {
+            thenWrapper = ELBus.then(nodeIdList.get(0));
+            for (int i = 1; i < nodeIdList.size(); i++) {
+                thenWrapper.then(nodeIdList.get(i));
+            }
+        } else {
+            thenWrapper = ELBus.then(receiveNodeId);
+        }
+        return thenWrapper;
+    }
+
+
+
+
+    private static ELWrapper getWrapper2(ElReceiveData receiveData, List<ELWrapper> childrenWrapper) {
+        ELWrapper elWrapper;
+        String id = receiveData.getId();
+        String tag = receiveData.getTag();
+        List<String> nodeIdList = receiveData.getNodeIdList();
         switch (receiveData.getType().getName()) {
             case "ForELWrapper":
                 elWrapper = ELBus.forOpt(receiveData.getNodeId());
@@ -77,43 +225,27 @@ public class ElDataToString {
                 break;
 
             case "OrELWrapper":
-                elWrapper = ELBus.or(receiveData.getNodeId());
-                if (CollectionUtil.isNotEmpty(childrenWrapper)) {
-                    childrenWrapper.forEach(wrapper -> {
-                        ((OrELWrapper) elWrapper).or(wrapper);
-                    });
-                }
+                elWrapper = createOrWrapper(nodeIdList, receiveData.getNodeId());
+                addChildOrWrappers(elWrapper, childrenWrapper);
                 if (StrUtil.isNotBlank(id)) ((OrELWrapper) elWrapper).id(id);
                 if (StrUtil.isNotBlank(tag)) ((OrELWrapper) elWrapper).tag(tag);
                 break;
             case "AndELWrapper":
-                elWrapper = ELBus.and(receiveData.getNodeId());
-                if (CollectionUtil.isNotEmpty(childrenWrapper)) {
-                    childrenWrapper.forEach(wrapper -> {
-                        ((AndELWrapper) elWrapper).and(wrapper);
-                    });
-                }
+                elWrapper = createAndWrapper(nodeIdList, receiveData.getNodeId());
+                addChildAndWrappers(elWrapper, childrenWrapper);
                 if (StrUtil.isNotBlank(id)) ((AndELWrapper) elWrapper).id(id);
                 if (StrUtil.isNotBlank(tag)) ((AndELWrapper) elWrapper).tag(tag);
                 break;
             case "WhenELWrapper":
-                elWrapper = ELBus.when(receiveData.getNodeId());
-                if (CollectionUtil.isNotEmpty(childrenWrapper)) {
-                    childrenWrapper.forEach(wrapper -> {
-                        ((WhenELWrapper) elWrapper).when(wrapper);
-                    });
-                }
+                elWrapper = createWhenWrapper(nodeIdList, receiveData.getNodeId());
+                addChildWhenWrappers(elWrapper, childrenWrapper);
                 if (StrUtil.isNotBlank(id)) ((WhenELWrapper) elWrapper).id(id);
                 if (StrUtil.isNotBlank(tag)) ((WhenELWrapper) elWrapper).tag(tag);
                 break;
             default:
             case "ThenELWrapper":
-                elWrapper = ELBus.then(receiveData.getNodeId());
-                if (CollectionUtil.isNotEmpty(childrenWrapper)) {
-                    childrenWrapper.forEach(wrapper -> {
-                        ((ThenELWrapper) elWrapper).then(wrapper);
-                    });
-                }
+                elWrapper = createThenWrapper(nodeIdList, receiveData.getNodeId());
+                addChildThenWrappers(elWrapper, childrenWrapper);
                 if (StrUtil.isNotBlank(id)) ((ThenELWrapper) elWrapper).id(id);
                 if (StrUtil.isNotBlank(tag)) ((ThenELWrapper) elWrapper).tag(tag);
                 break;

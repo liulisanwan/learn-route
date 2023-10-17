@@ -21,7 +21,24 @@ public class ElDataToStringTest {
         * WHEN()
         * node("a")
         * WHEN(node("b"),WHEN(node("b1")),WHEN(node("d1"))).id("a1")
+        * node("b")
+        * (node("b1"),node("b2"))
+        * (node("d1"),node("d2"))
         * WHEN(node("d"),WHEN(node("b1")),WHEN(node("d1"))).id("a2")
+        *
+        *
+        *
+        *
+        *
+        *
+        * node("a")
+        * WHEN(node("b"),WHEN(node("b1")),WHEN(node("d1"))).id("a1")
+        * WHEN(node("d"),WHEN(node("b1")),WHEN(node("d1"))).id("a2")
+        *
+        * node("b")
+        * WHEN(node("b1")),WHEN(node("d1"))
+        *
+        *
         * */
         ElReceiveData data= ElReceiveData.builder().type(ElType.WhenELWrapper).NodeId("a").build();
         ElReceiveData data2= ElReceiveData.builder().type(ElType.WhenELWrapper).NodeId("b").id("a1").build();
