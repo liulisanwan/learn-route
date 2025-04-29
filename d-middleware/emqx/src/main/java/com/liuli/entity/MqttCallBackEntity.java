@@ -53,8 +53,10 @@ public class MqttCallBackEntity implements MqttCallback, MqttCallbackExtended {
 
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-        SymLinkReadEntity readEntity = JSON.parseObject(new String(mqttMessage.getPayload()), SymLinkReadEntity.class);
-        map= readEntity.getDatas().stream().collect(Collectors.toMap(SymLinkReadEquipmentParam::getNm, SymLinkReadEquipmentParam::getV));
+        String message = new String(mqttMessage.getPayload());
+        System.err.println(message);
+//        SymLinkReadEntity readEntity = JSON.parseObject(message, SymLinkReadEntity.class);
+//        map= readEntity.getDatas().stream().collect(Collectors.toMap(SymLinkReadEquipmentParam::getNm, SymLinkReadEquipmentParam::getV));
     }
 
     @Override

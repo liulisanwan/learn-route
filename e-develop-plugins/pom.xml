@@ -18,6 +18,8 @@
         <module>mybatis-plus-join-use</module>
         <module>retrofit</module>
         <module>transmittable</module>
+        <module>mybatis-generator</module>
+        <module>http</module>
     </modules>
 
 </project>

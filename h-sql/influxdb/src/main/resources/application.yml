@@ -1,0 +1,32 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  port: 9865
+knife4j:
+  basic:
+    enable: false
+    password: 123456
+    username: admin
+  enable: true
+  openapi:
+    description: API文档
+    group:
+      demo:
+        api-rule: package
+        api-rule-resources:
+          - com.iot
+        group-name: iot
+    license: MIT
+    title: 在线文档
+    version: v1.0.0
+influxdb:
+  url: http://127.0.0.1:8086
+  org: chlrob
+  bucket: iot
+  token: f4nfUZHCiry2tVWe1RGewzT3ZRedKHg8xuvYVvwsWZRJeo8_p1vuhL95ntCLkP8MRIvWuc0GLoQZnv7QKf7i5w==
+  logLevel: BODY
+  readTimeout: 5000
+  writeTimeout: 5000
+  connectTimeout: 5000

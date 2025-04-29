@@ -1,0 +1,34 @@
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: varchar
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      column-underline: true
+      db-type: mysql
+      field-strategy: not_empty
+      id-type: ASSIGN_UUID
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+  mapper-locations: classpath*:dao/*.xml
+liteflow:
+  rule-source-ext-data-map:
+    applicationName: demo
+    chainApplicationNameField: application_name
+    chainNameField: chain_name
+    chainTableName: pl_chain
+    driverClassName: ${jdbc.driver}
+    elDataField: el_data
+    password: ${jdbc.password}
+    scriptApplicationNameField: application_name
+    scriptDataField: script_node_data
+    scriptIdField: script_node_id
+    scriptLanguageField: script_language
+    scriptNameField: script_node_name
+    scriptTableName: pl_script_node
+    scriptTypeField: script_node_type
+    url: ${jdbc.url}
+    username: ${jdbc.username}

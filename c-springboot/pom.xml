@@ -10,7 +10,19 @@
     </parent>
 
     <artifactId>c-springboot</artifactId>
+    <packaging>pom</packaging>
     <description>springboot</description>
+    <modules>
+        <module>interface-brush-protection</module>
+        <module>errorDemo</module>
+    </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.liuli</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

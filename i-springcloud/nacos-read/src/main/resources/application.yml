@@ -1,0 +1,39 @@
+knife4j:
+  basic:
+    enable: false
+    password: 123456
+    username: admin
+  enable: true
+  openapi:
+    description: API文档
+    group:
+      demo:
+        api-rule: package
+        api-rule-resources:
+          - com.iot
+        group-name: iot
+    license: MIT
+    title: 在线文档
+    version: v1.0.0
+spring:
+  application:
+    name: nacos-read
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cloud:
+    nacos:
+      # nacos 服务地址
+      server-addr: 192.168.116.143:8848
+      discovery:
+        # 注册组
+        group: DEFAULT_GROUP
+        namespace: dev
+      config:
+        # 配置组
+        group: DEFAULT_GROUP
+        namespace: dev
+    config:
+      import:
+        - optional:nacos:datasource.yml
+  #      - optional:nacos:${spring.application.name}.yml

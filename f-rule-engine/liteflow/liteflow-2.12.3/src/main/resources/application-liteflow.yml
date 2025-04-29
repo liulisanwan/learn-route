@@ -1,0 +1,36 @@
+liteflow:
+  rule-source-ext-data-map:
+    # 数据库地址
+    url: jdbc:mysql://localhost:3306/liteflow-2.12.3
+    # 数据库连接驱动名称
+    driverClassName: com.mysql.cj.jdbc.Driver
+    # 数据库用户名
+    username: root
+    # 数据库密码
+    password: root
+    applicationName: demo
+    #是否开启SQL日志
+    sqlLogEnabled: true
+    #是否开启SQL数据轮询自动刷新机制 默认不开启
+    pollingEnabled: true
+    pollingIntervalSeconds: 60
+    pollingStartSeconds: 60
+    #以下是chain表的配置，这个一定得有
+    chainTableName: el_table
+    chainApplicationNameField: application_name
+    chainNameField: chain_name
+    elDataField: el_data
+    #以下是决策路由字段的配置，如果你没用到决策路由，可以不配置
+    routeField: route
+    namespaceField: namespace
+    #是否启用这条规则
+    chainEnableField: enable
+    #以下是script表的配置，如果你没使用到脚本，下面可以不配置
+    scriptTableName: script_node_table
+    scriptApplicationNameField: application_name
+    scriptIdField: script_node_id
+    scriptNameField: script_node_name
+    scriptDataField: script_node_data
+    scriptTypeField: script_node_type
+    scriptLanguageField: script_language
+    scriptEnableField: enable

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iot.database.mapper.PlThirdPartyDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.iot.database.entity.PlThirdPartyData">
+        <id column="id" property="id" />
+        <result column="third_party_id" property="thirdPartyId" />
+        <result column="third_party_data_type" property="thirdPartyDataType" />
+        <result column="third_party_data_name" property="thirdPartyDataName" />
+        <result column="third_party_data_value" property="thirdPartyDataValue" />
+        <result column="request_response_type" property="requestResponseType" />
+        <result column="node_id" property="nodeId" />
+        <result column="status" property="status" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="remarks" property="remarks" />
+        <result column="corp_code" property="corpCode" />
+        <result column="corp_name" property="corpName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, third_party_id, third_party_data_type, third_party_data_name, third_party_data_value, request_response_type, node_id, status, create_by, create_date, update_by, update_date, remarks, corp_code, corp_name
+    </sql>
+
+</mapper>

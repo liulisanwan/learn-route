@@ -1,5 +1,7 @@
 package com.liuli.c_thread_pool.common;
 
+import java.util.Date;
+
 /**
  * 线程池使用说明
  *
@@ -28,4 +30,10 @@ public class ThreadPoolInstructionsForUse {
     * ThreadPoolExecutor 正常执行的线程池
     * ScheduledThreadPoolExecutor 定时任务线程池
     * */
+
+    public static void main(String[] args) {
+        Long time =1744077520000L;
+        time=time*1000;
+        System.err.println(new Date(1744077571000L));
+    }
 }

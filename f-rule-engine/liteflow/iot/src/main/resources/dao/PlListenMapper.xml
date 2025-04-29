@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iot.database.mapper.PlListenMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.iot.database.entity.PlListen">
+        <id column="id" property="id"/>
+        <result column="attribute_name" property="attributeName"/>
+        <result column="attribute_type" property="attributeType"/>
+        <result column="attribute_value" property="attributeValue"/>
+        <result column="node_flag" property="nodeId"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_date" property="updateDate"/>
+        <result column="remarks" property="remarks"/>
+        <result column="corp_code" property="corpCode"/>
+        <result column="corp_name" property="corpName"/>
+        <result column="alias_id" property="aliasId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, attribute_name, attribute_type, attribute_value, node_flag, status, create_by, create_date, update_by, update_date, remarks, corp_code, corp_name, extend_s1, extend_s2, extend_s3, extend_s4, extend_s5, extend_s6, extend_s7, extend_s8, extend_i1, extend_i2, extend_i3, extend_i4, extend_f1, extend_f2, extend_f3, extend_f4, extend_d1, extend_d2, extend_d3, extend_d4
+    </sql>
+
+    <select id="listByChain" resultType="com.iot.database.entity.PlListen">
+        SELECT
+            listen.*,
+            node.alias_id
+        FROM
+            pl_chain AS CHAIN
+            LEFT JOIN pl_script_node AS node ON CHAIN.chain_name = node.chain_id
+            INNER JOIN pl_listen AS listen ON node.script_node_id = listen.node_id
+        WHERE
+            CHAIN.chain_name = #{chainId};
+    </select>
+
+</mapper>

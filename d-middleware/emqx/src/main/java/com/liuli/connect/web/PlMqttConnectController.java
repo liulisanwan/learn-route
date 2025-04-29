@@ -6,9 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -40,6 +38,31 @@ public class PlMqttConnectController {
     public void close() throws MqttException {
         connect.close();
         connect=null;
+    }
+
+    @GetMapping("sendMessage")
+    @ApiOperation("发送消息")
+    public void sendMessage(){
+        try {
+            connect.pub("test","123");
+        } catch (MqttException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @PostMapping("/saveOnline")
+    @ApiOperation("保存上线")
+    public void saveOnline(@RequestBody String clientId){
+        //{"clientId":${clientId}}
+        System.err.println(clientId);
+    }
+
+
+    @PostMapping("removeOffline")
+    @ApiOperation("移除离线")
+    public void removeOffline(@RequestBody String clientId){
+        System.err.println(clientId);
     }
 }
 

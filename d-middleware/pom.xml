@@ -10,7 +10,14 @@
     </parent>
 
     <artifactId>d-middleware</artifactId>
+    <packaging>pom</packaging>
     <description>中间件</description>
+
+    <modules>
+        <module>emqx</module>
+        <module>rabbitMq</module>
+        <module>kafaka</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

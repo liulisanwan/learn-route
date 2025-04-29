@@ -14,7 +14,10 @@
     <description>liteflow规则引擎</description>
     <modules>
         <module>liteflow-2.11.0</module>
-        <module>liteflow-2.11.1</module>
+        <module>liteflow-2.11.2</module>
+        <module>iot</module>
+        <module>liteflow-postgresql</module>
+        <module>liteflow-2.12.3</module>
     </modules>
 
 
